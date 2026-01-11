@@ -31,7 +31,7 @@
             z-index: 1000; transition: opacity 0.8s ease, visibility 0.8s;
         }
 
-        .lock-container { text-align: center; padding: 20px; animation: fadeIn 1s ease; }
+        .lock-container { text-align: center; padding: 20px; }
         .lock-container h2 { font-family: 'Dancing Script', cursive; font-size: 2.2rem; margin-bottom: 10px; }
         
         input[type="password"] {
@@ -96,8 +96,6 @@
             100% { transform: scale(1.6); opacity: 0; }
         }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
         .close-btn {
             margin-top: 25px; padding: 12px 30px; font-family: 'Poppins';
             background: var(--purple-light); color: white; border: none; border-radius: 25px;
@@ -107,7 +105,6 @@
         @media (max-width: 480px) {
             .letters-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
             h1 { font-size: 1.6rem; }
-            .letter-content { width: 80%; padding: 30px 20px; }
         }
     </style>
 </head>
@@ -117,7 +114,9 @@
         <div class="lock-container">
             <h2>🔒 Bu site sana özel</h2>
             <p>Şifre: Sevgili olduğumuz gün 💜</p>
-            <input type="password" id="passInput" placeholder="0000" maxlength="4" oninput="checkUnlock(this)" autocomplete="off">
+            <form onsubmit="event.preventDefault(); checkUnlock(document.getElementById('passInput'));">
+                <input type="password" id="passInput" placeholder="0000" maxlength="4" oninput="checkUnlock(this)" autocomplete="off">
+            </form>
         </div>
     </div>
 
@@ -172,6 +171,7 @@
             grid.appendChild(container);
         }
 
+        // Geliştirilmiş Açma Fonksiyonu
         function checkUnlock(input) {
             if (input.value === "0325") {
                 const lock = document.getElementById('lock-screen');
