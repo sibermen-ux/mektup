@@ -38,8 +38,18 @@
             padding: 15px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.3);
             text-align: center; font-size: 1.2rem; width: 180px;
             background: rgba(255,255,255,0.1); color: white; outline: none;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(5px); margin-bottom: 20px;
         }
+
+        /* Devam Butonu */
+        .btn-unlock {
+            padding: 12px 35px; border-radius: 30px; border: none;
+            background: var(--purple-light); color: white;
+            font-size: 1rem; cursor: pointer; font-family: 'Poppins';
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: 0.3s; display: block; margin: 0 auto;
+        }
+        .btn-unlock:active { transform: scale(0.95); background: #8e24aa; }
 
         /* Ana İçerik */
         #main-content {
@@ -49,12 +59,10 @@
 
         h1 { font-family: 'Dancing Script', cursive; font-size: 2.3rem; margin-bottom: 40px; }
 
-        /* Mektup Izgarası */
         .letters-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-            gap: 20px;
-            padding-bottom: 50px;
+            gap: 20px; padding-bottom: 50px;
         }
 
         .envelope-container { cursor: pointer; }
@@ -70,7 +78,6 @@
         .envelope span { font-size: 2.2rem; }
         .envelope-no { font-weight: bold; font-size: 0.8rem; margin-top: 5px; opacity: 0.7; }
 
-        /* Modal ve Öpücük */
         .modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.9); display: none;
@@ -99,7 +106,7 @@
         .close-btn {
             margin-top: 25px; padding: 12px 30px; font-family: 'Poppins';
             background: var(--purple-light); color: white; border: none; border-radius: 25px;
-            cursor: pointer; font-size: 0.9rem;
+            cursor: pointer;
         }
 
         @media (max-width: 480px) {
@@ -113,10 +120,12 @@
     <div id="lock-screen">
         <div class="lock-container">
             <h2>🔒 Bu site sana özel</h2>
-            <p>Şifre: Sevgili olduğumuz gün 💜</p>
-            <form onsubmit="event.preventDefault(); checkUnlock(document.getElementById('passInput'));">
-                <input type="password" id="passInput" placeholder="0000" maxlength="4" oninput="checkUnlock(this)" autocomplete="off">
+            <p style="margin-bottom: 25px; font-size: 0.9rem; opacity: 0.9;">Şifre: Sevgili olduğumuz gün 💜</p>
+            <form onsubmit="event.preventDefault(); validatePassword();">
+                <input type="password" id="passInput" placeholder="Şifre" maxlength="4" autocomplete="off">
+                <button type="submit" class="btn-unlock">Giriş Yap 💜</button>
             </form>
+            <p id="error-msg" style="color: #ff8a80; font-size: 0.8rem; margin-top: 15px; display: none;">Hatalı şifre, tekrar dene sevgilim..</p>
         </div>
     </div>
 
@@ -152,7 +161,7 @@
             15: "Sen yanımdayken\nher şey doğru.\nKalbim artık\nsana ait, olduğu gibi.",
             16: "Bir bakışın\nyeter bana.\nAşk dediğin\nbir anda anlama.",
             17: "Seni düşünmek\nsessiz bir mutluluk.\nKalbim\nsana alışık.",
-            18: "Yanında olmak\ngüvende hissetmek.\nKalbimin en sakin\nyerinde durmak.",
+            18: "Yanında olmak\ngüvende hissetmek.\nKalbimin en sakin\yerinde durmak.",
             19: "Adın kalbimde\nkırılmadan durur.\nAşk seninle\nincitmeden olur.",
             20: "Ben seni\nyük olmadan severim.\nKalbimi sana\nhafifçe veririm.",
             21: "Sen gülünce\niçim rahat.\nAşk bazen\nbu kadar basit.",
@@ -171,9 +180,13 @@
             grid.appendChild(container);
         }
 
-        // Geliştirilmiş Açma Fonksiyonu
-        function checkUnlock(input) {
+        // Şifre Doğrulama Fonksiyonu
+        function validatePassword() {
+            const input = document.getElementById('passInput');
+            const error = document.getElementById('error-msg');
+            
             if (input.value === "0325") {
+                error.style.display = 'none';
                 const lock = document.getElementById('lock-screen');
                 const main = document.getElementById('main-content');
                 lock.style.opacity = '0';
@@ -182,6 +195,10 @@
                     main.style.display = 'block';
                     setTimeout(() => main.style.opacity = '1', 50);
                 }, 800);
+            } else {
+                error.style.display = 'block';
+                input.value = "";
+                input.focus();
             }
         }
 
