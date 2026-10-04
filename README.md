@@ -88,6 +88,7 @@
             font-size: 8rem; display: none;
             animation: kiss-anim 1.2s ease-in-out forwards;
             position: absolute;
+            pointer-events: none;
         }
 
         .letter-content {
@@ -122,7 +123,7 @@
             <h2>🔒 Bu site sana özel</h2>
             <p style="margin-bottom: 25px; font-size: 0.9rem; opacity: 0.9;">Şifre: Sevgili olduğumuz gün 💜</p>
             <form onsubmit="event.preventDefault(); validatePassword();">
-                <input type="password" id="passInput" placeholder="Şifre" maxlength="4" autocomplete="off">
+                <input type="password" id="passInput" placeholder="Şifre" maxlength="10" autocomplete="off">
                 <button type="submit" class="btn-unlock">Giriş Yap 💜</button>
             </form>
             <p id="error-msg" style="color: #ff8a80; font-size: 0.8rem; margin-top: 15px; display: none;">Hatalı şifre, tekrar dene sevgilim..</p>
@@ -143,6 +144,9 @@
     </div>
 
     <script>
+        // Şifrenizi buraya yazabilirsiniz (Varsayılan: 0000 veya tarih örn: 1402)
+        const CORRECT_PASSWORD = "0000";
+
         const letterMessages = {
             1: "Sen gelince içime\ndünya duruyor.\nKalbim ilk kez\nyerini buluyor.",
             2: "Aşk büyük laflar değil,\nküçük anlar.\nYanında olmak\nher şeye yeter.",
@@ -161,7 +165,7 @@
             15: "Sen yanımdayken\nher şey doğru.\nKalbim artık\nsana ait, olduğu gibi.",
             16: "Bir bakışın\nyeter bana.\nAşk dediğin\nbir anda anlama.",
             17: "Seni düşünmek\nsessiz bir mutluluk.\nKalbim\nsana alışık.",
-            18: "Yanında olmak\ngüvende hissetmek.\nKalbimin en sakin\yerinde durmak.",
+            18: "Yanında olmak\ngüvende hissetmek.\nKalbimin en sakin\nyerinde durmak.",
             19: "Adın kalbimde\nkırılmadan durur.\nAşk seninle\nincitmeden olur.",
             20: "Ben seni\nyük olmadan severim.\nKalbimi sana\nhafifçe veririm.",
             21: "Sen gülünce\niçim rahat.\nAşk bazen\nbu kadar basit.",
@@ -176,16 +180,15 @@
             const container = document.createElement('div');
             container.className = 'envelope-container';
             container.onclick = () => openLetter(i);
-            container.innerHTML = <div class="envelope"><span>💌</span><div class="envelope-no">Mektup ${i}</div></div>;
+            container.innerHTML = `<div class="envelope"><span>💌</span><div class="envelope-no">Mektup ${i}</div></div>`;
             grid.appendChild(container);
         }
 
-        // Şifre Doğrulama Fonksiyonu
         function validatePassword() {
             const input = document.getElementById('passInput');
             const error = document.getElementById('error-msg');
             
-            if (input.value === "0000") {
+            if (input.value === CORRECT_PASSWORD) {
                 error.style.display = 'none';
                 const lock = document.getElementById('lock-screen');
                 const main = document.getElementById('main-content');
