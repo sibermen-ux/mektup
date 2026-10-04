@@ -185,7 +185,7 @@
             const input = document.getElementById('passInput');
             const error = document.getElementById('error-msg');
             
-            if (input.value === "0325") {
+            if (input.value === "0000") {
                 error.style.display = 'none';
                 const lock = document.getElementById('lock-screen');
                 const main = document.getElementById('main-content');
