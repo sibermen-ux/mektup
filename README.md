@@ -145,7 +145,7 @@
 
     <script>
         // Şifrenizi buraya yazabilirsiniz (Varsayılan: 0000 veya tarih örn: 1402)
-        const CORRECT_PASSWORD = "0000";
+        const CORRECT_PASSWORD = "03122024";
 
         const letterMessages = {
             1: "Sen gelince içime\ndünya duruyor.\nKalbim ilk kez\nyerini buluyor.",
